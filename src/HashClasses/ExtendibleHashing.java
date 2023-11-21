@@ -26,7 +26,7 @@ public class ExtendibleHashing implements Serializable {
         return directory.get(h & ((1 << globalDepth) - 1));
     }
 
-    public void insert(String k, byte[] v) {
+    public void insert(String k, CustomHashTable v) {
         Bucket bucket = getBucket(k);
         boolean full = bucket.isFull();
         bucket.put(k, v);
@@ -41,7 +41,7 @@ public class ExtendibleHashing implements Serializable {
             p0.setLocalDepth(bucket.getLocalDepth() + 1);
             p1.setLocalDepth(bucket.getLocalDepth() + 1);
             int highBit = bucket.getLocalHighBit();
-            for (SimpleEntry<String, byte[]> entry : bucket.getMap()) {
+            for (SimpleEntry<String, CustomHashTable> entry : bucket.getMap()) {
                 int h = entry.getKey().hashCode();
                 Bucket newBucket = (h & highBit) != 0 ? p1 : p0;
                 newBucket.put(entry.getKey(), entry.getValue());
@@ -54,14 +54,14 @@ public class ExtendibleHashing implements Serializable {
         }
     }
 
-    public byte[] find(String k) {
+    public CustomHashTable find(String k) {
         return getBucket(k).get(k);
     }
 }
 
 class Bucket implements Serializable {
     private static final int BUCKET_SIZE = 10;
-    private ArrayList<SimpleEntry<String, byte[]>> map;
+    private ArrayList<SimpleEntry<String, CustomHashTable>> map;
     private int localDepth;
 
     public Bucket() {
@@ -73,7 +73,7 @@ class Bucket implements Serializable {
         return map.size() >= BUCKET_SIZE;
     }
 
-    public void put(String k, byte[] v) {
+    public void put(String k, CustomHashTable v) {
         for (int i = 0; i < map.size(); i++) {
             if (map.get(i).getKey().equals(k)) {
                 map.remove(i);
@@ -83,8 +83,8 @@ class Bucket implements Serializable {
         map.add(new SimpleEntry<>(k, v));
     }
 
-    public byte[] get(String k) {
-        for (SimpleEntry<String, byte[]> entry : map) {
+    public CustomHashTable get(String k) {
+        for (SimpleEntry<String, CustomHashTable> entry : map) {
             if (entry.getKey().equals(k)) {
                 return entry.getValue();
             }
@@ -92,7 +92,7 @@ class Bucket implements Serializable {
         return null;
     }
 
-    public ArrayList<SimpleEntry<String, byte[]>> getMap() {
+    public ArrayList<SimpleEntry<String, CustomHashTable>> getMap() {
         return this.map;
     }
 
