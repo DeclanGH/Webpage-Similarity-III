@@ -40,7 +40,7 @@ public class WikipediaLinkGenerator {
     private static void writeJsonFile(JsonArray linksArray) {
 
         // Create a new Json File (change path to match yours if you are borrowing this code)
-        String filePath = "/Users/declan/IdeaProjects/Wikipedia-Page-Similarity-II/src/";
+        String filePath = "/Users/declan/IdeaProjects/Wikipedia-Page-Similarity-III/src/";
         File outputFile = new File(filePath + "MyLinks.json");
 
         OutputStream outputStream = null;
@@ -83,7 +83,7 @@ public class WikipediaLinkGenerator {
         HashSet<String> links = new HashSet<>();
         int watchDog = 0;
 
-        while(links.size() < 200){
+        while(links.size() < 1000){
             // this is to make the bound 1 to sizeOfList. The 0th link was sourceURL :(
             int randomIndex = random.nextInt(sizeOfList - 1) + 1;
 
@@ -93,7 +93,7 @@ public class WikipediaLinkGenerator {
             links.add(randomLink);
             watchDog += 1;
 
-            if(watchDog > 400){
+            if(watchDog > 2000){
                 System.out.println("Unable to generate links--loops went above limit. Please Try again");
                 System.exit(0);
             }
