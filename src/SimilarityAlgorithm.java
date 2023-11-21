@@ -144,9 +144,7 @@ public class SimilarityAlgorithm {
         String urlOfMax = "";
 
         for(int i=0; i<myUrls.length; i++){
-            ByteArrayInputStream bis = new ByteArrayInputStream(urlsMappedToObject.find(myUrls[i]));
-            ObjectInputStream ois = new ObjectInputStream(bis);
-            CustomHashTable myUrlHashTable = (CustomHashTable) ois.readObject();
+            CustomHashTable myUrlHashTable = urlsMappedToObject.find(myUrls[i]);
             String[] myUrlWordList = myUrlHashTable.toKeyList();
 
             for(String s : myUrlWordList){

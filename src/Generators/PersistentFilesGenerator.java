@@ -76,12 +76,7 @@ public class PersistentFilesGenerator {
                 double idf = (double) arrayOfLinks.size() / dictionary.getIdfCount(s);
                 ht.advancedAdd(s,arrayOfWords.length,idf);
             }
-
-            // For each url, serialize its hashtable object and map to its url to serialized object
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(bos);
-            oos.writeObject(ht);
-            urlMapToFile.insert(url,bos.toByteArray());
+            urlMapToFile.insert(url,ht);
         }
 
         // Serialize the ExtendibleHashing Object to be used by other classes

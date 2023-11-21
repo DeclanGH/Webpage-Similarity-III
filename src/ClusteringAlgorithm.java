@@ -122,9 +122,9 @@ public class ClusteringAlgorithm {
 
         Random rand = new Random();
         /*int k = rand.nextInt(5,11); // range of k*/
-        int k = 10;
+        int k = 50;
 
-        int iterationLimit = 1000; // 100 times k (just my preference)
+        int iterationLimit = 100; // 100 times k (just my preference)
 
         HashSet<String> centroidSet = new HashSet<>(); // the k selected centroids
 
@@ -216,7 +216,7 @@ public class ClusteringAlgorithm {
                 finalState = initialState;
             }
 
-            if (i == 999){
+            if (i == 99){
                 System.out.println("Reached Iteration Limit!");
             }
         }
@@ -226,8 +226,7 @@ public class ClusteringAlgorithm {
     }
 
     private static ArrayList<String> getClosestCentroid
-            (String s, HashSet<String> centroidSet, ExtendibleHashing urlsMappedToObject)
-            throws IOException, ClassNotFoundException {
+            (String s, HashSet<String> centroidSet, ExtendibleHashing urlsMappedToObject) {
 
         ArrayList<String> centroidAndScore = new ArrayList<>();
 
@@ -235,15 +234,11 @@ public class ClusteringAlgorithm {
         double similarityScore1;
         double similarityScore2 = -1; // initialize with a negative score
 
-        ByteArrayInputStream bis = new ByteArrayInputStream(urlsMappedToObject.find(s));
-        ObjectInputStream ois = new ObjectInputStream(bis);
-        CustomHashTable ht1 = (CustomHashTable) ois.readObject();
+        CustomHashTable ht1 = urlsMappedToObject.find(s);
         String[] ht1KeyList = ht1.toKeyList();
 
         for(String centroid : centroidSet){
-            ByteArrayInputStream bis1 = new ByteArrayInputStream(urlsMappedToObject.find(centroid));
-            ObjectInputStream ois1 = new ObjectInputStream(bis1);
-            CustomHashTable ht2 = (CustomHashTable) ois1.readObject();
+            CustomHashTable ht2 = urlsMappedToObject.find(centroid);
 
             similarityScore1 = SimilarityAlgorithm.doCosineSimilarity(ht1,ht2,ht1KeyList);
 
