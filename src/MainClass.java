@@ -11,6 +11,14 @@ import java.io.IOException;
 public class MainClass {
 
     public static void main(String[] args) {
+
+        // look and feel for my gui
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
         SwingUtilities.invokeLater(() -> {
             try {
                 runGui();
@@ -22,11 +30,11 @@ public class MainClass {
 
     private static void runGui() throws IOException, ClassNotFoundException {
         SimilarityAlgorithm gui = new SimilarityAlgorithm();
-        JFrame frame = new JFrame();
+        JFrame frame = new JFrame("Wikipedia Page Similarity III");
+        frame.setSize(450,500);
         frame.setContentPane(gui.getPanel());
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
         frame.setVisible(true);
     }
 }
