@@ -92,7 +92,7 @@ public class SimilarityAlgorithm {
         properties.load(fis);
 
         // GET json file location (change the .json file name below to match yours)
-        String filePath = properties.getProperty("filepath") + File.separator + "10Clusters.json";
+        String filePath = properties.getProperty("filepath") + File.separator + "Clusters.json";
         File inputFile = new File(filePath);
 
         // READ json file
