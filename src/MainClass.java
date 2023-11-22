@@ -31,7 +31,7 @@ public class MainClass {
     private static void runGui() throws IOException, ClassNotFoundException {
         SimilarityAlgorithm gui = new SimilarityAlgorithm();
         JFrame frame = new JFrame("Wikipedia Page Similarity III");
-        frame.setSize(450,500);
+        frame.setSize(650,500);
         frame.setContentPane(gui.getPanel());
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
