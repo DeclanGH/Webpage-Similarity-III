@@ -26,6 +26,10 @@ public class SimilarityAlgorithm {
     private JTextField outputLink1;
     private JTextField outputLink2;
     private JButton copyButton2;
+    private JComboBox fromUrlComboBox;
+    private JComboBox toUrlComboBox;
+    private JTextArea pathOutput;
+    private JButton getPathButton;
 
     public JPanel getPanel() {
         return this.panel;
@@ -53,6 +57,13 @@ public class SimilarityAlgorithm {
         ObjectInputStream ois2 = new ObjectInputStream(fis2);
         CustomHashTable deserializedUrlList = (CustomHashTable) ois2.readObject();
         String[] myUrls = deserializedUrlList.toKeyList();
+
+        // Create a DefaultComboBoxModel for myUrls and set it to the comboboxes
+        DefaultComboBoxModel<String> fromUrlComboBoxModel = new DefaultComboBoxModel<>(myUrls);
+        DefaultComboBoxModel<String> toUrlComboBoxModel = new DefaultComboBoxModel<>(myUrls);
+
+        fromUrlComboBox.setModel(fromUrlComboBoxModel);
+        toUrlComboBox.setModel(toUrlComboBoxModel);
 
         runButton.addActionListener(e -> {
             try {
