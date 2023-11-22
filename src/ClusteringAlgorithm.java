@@ -124,7 +124,7 @@ public class ClusteringAlgorithm {
         /*int k = rand.nextInt(5,11); // range of k*/
         int k = 50;
 
-        int iterationLimit = 100; // 100 times k (just my preference)
+        int iterationLimit = 1000; // 20 times k (just my preference)
 
         HashSet<String> centroidSet = new HashSet<>(); // the k selected centroids
 
@@ -216,9 +216,10 @@ public class ClusteringAlgorithm {
                 finalState = initialState;
             }
 
-            if (i == 99){
+            if (i == 999){
                 System.out.println("Reached Iteration Limit!");
             }
+
         }
 
         System.out.println("\nwith a score of: " + variance);
@@ -258,8 +259,8 @@ public class ClusteringAlgorithm {
     private static void loadJsonOutput(HashMap<String,Cluster> finalState) {
 
         // Create a new Json File (change path to match yours if you are borrowing this code)
-        String filePath = "/Users/declan/IdeaProjects/Wikipedia-Page-Similarity-II/src/";
-        File outputFile = new File(filePath + "10Clusters.json");
+        String filePath = "/Users/declan/IdeaProjects/Wikipedia-Page-Similarity-III/src/";
+        File outputFile = new File(filePath + "Clusters.json");
 
         OutputStream outputStream = null;
         try{
@@ -290,7 +291,7 @@ public class ClusteringAlgorithm {
         writer = wFactory.createWriter(outputStream);
         writer.writeObject(objectBuilder.build());
         writer.close();
-        System.out.println("\nLinks Generated in a '10Clusters.json' file. Goodbye! :)");
+        System.out.println("\nLinks Generated in a 'Clusters.json' file. Goodbye! :)");
     }
 
 }
