@@ -1,7 +1,7 @@
 /**
  * Author: Declan ONUNKWO
  * College: SUNY Oswego
- * CSC 365 Project 2
+ * CSC 365 Project 3
  * Fall 2023
  */
 
@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -58,6 +59,11 @@ public class SimilarityAlgorithm {
         CustomHashTable deserializedUrlList = (CustomHashTable) ois2.readObject();
         String[] myUrls = deserializedUrlList.toKeyList();
 
+        // Deserialize my graph
+        FileInputStream fis3 = new FileInputStream("SerializedGraph");
+        ObjectInputStream ois3 = new ObjectInputStream(fis3);
+        Graph graph = (Graph) ois3.readObject();
+
         // Create a DefaultComboBoxModel for myUrls and set it to the comboboxes
         DefaultComboBoxModel<String> fromUrlComboBoxModel = new DefaultComboBoxModel<>(myUrls);
         DefaultComboBoxModel<String> toUrlComboBoxModel = new DefaultComboBoxModel<>(myUrls);
@@ -71,6 +77,21 @@ public class SimilarityAlgorithm {
                 findTwoMostSimilar(userInput, urlsMappedToObject, dictionary, myUrls,clusters);
             } catch (IOException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
+            }
+        });
+
+        getPathButton.addActionListener(e -> {
+            String from = (String) fromUrlComboBox.getSelectedItem();
+            String to = (String) toUrlComboBox.getSelectedItem();
+            if (!from.equals(to)) {
+                String[] pathArray = graph.getPath(from, to);
+                StringBuilder path = new StringBuilder();
+                for (String node : pathArray){
+                    path.append(node).append("\n");
+                }
+                pathOutput.setText(path.toString());
+            } else {
+                pathOutput.setText("The wiki link at 'from' cannot be the same as the one at 'to'.");
             }
         });
 
