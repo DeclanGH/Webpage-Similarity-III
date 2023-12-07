@@ -1,7 +1,7 @@
 /**
  * Author: Declan ONUNKWO
  * College: SUNY Oswego
- * CSC 365 Project 2
+ * CSC 365 Project 3
  * Fall 2023
  */
 
