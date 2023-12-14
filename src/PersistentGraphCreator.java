@@ -35,12 +35,15 @@ class Edge implements java.io.Serializable{
 class Graph implements java.io.Serializable {
 
     private HashMap<String, ArrayList<Edge>> graph;
+    private String[] urlList;
 
     public Graph (String[] urlList) {
+        this.urlList = urlList;
         createGraph(urlList);
     }
 
     public Graph (String[] urlList, ExtendibleHashing verticesMap) {
+        this.urlList = urlList;
         createGraph(urlList,verticesMap);
     }
 
@@ -75,7 +78,7 @@ class Graph implements java.io.Serializable {
 
     // Dijkstra-like algorithm to find the shortest path (using max weight :) )
     public String[] getPath(String from, String to){
-
+        DisjointDataSet disjointSet = new DisjointDataSet(urlList.length);
         HashMap<String, Double> shortestDistances = new HashMap<>();
         HashMap<String, String> previousNodes = new HashMap<>();
 
@@ -94,11 +97,14 @@ class Graph implements java.io.Serializable {
             for (Edge edge : graph.get(currentNode)) {
                 String neighbor = edge.getTo();
                 double newDistance = shortestDistances.get(currentNode) + edge.getSimilarity();
+                int indexCurrentNode = Arrays.asList(urlList).indexOf(currentNode);
+                int indexNeighbor = Arrays.asList(urlList).indexOf(neighbor);
 
                 if (!shortestDistances.containsKey(neighbor) || newDistance < shortestDistances.get(neighbor)) {
                     shortestDistances.put(neighbor, newDistance);
                     previousNodes.put(neighbor, currentNode);
                     nodesToVisit.add(neighbor);
+                    disjointSet.union(indexCurrentNode, indexNeighbor);
                 }
             }
         }
@@ -111,6 +117,7 @@ class Graph implements java.io.Serializable {
         for (String node = to; node != null; node = previousNodes.get(node)) {
             path.add(node);
         }
+        path.add(disjointSet.getCount()+"");
         Collections.reverse(path);
 
         return path.toArray(new String[0]);
